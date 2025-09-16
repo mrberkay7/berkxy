@@ -107,10 +107,10 @@
         <div class="date">"15 Mart 2025'ten beri Seni Çok Seviyorum Ömrümmm 💖"</div>
     </div>
            
-    <div class="instruction" id="instruction">🎵 Müzik Otomatik Çalıyor 🎵</div>
+    <div class="instruction" id="instruction">🎵 Müzik Dinlemek İçin Ekrana Tıkla 🎵</div>
     
     <!-- Şarkı -->
-    <audio id="backgroundMusic" src="silinmez.mp3" preload="auto" autoplay loop></audio>
+    <audio id="backgroundMusic" src="silinmez.mp3" preload="auto" loop></audio>
 
     <script>
         // Kalpler
@@ -157,9 +157,16 @@
         setInterval(updateCounter, 1000);
         updateCounter();
 
-        // Müzik otomatik çalıyor, tıklamaya gerek yok
+        // Müzik (kullanıcı tıklayınca çalacak)
         const audio = document.getElementById('backgroundMusic');
-        audio.play().catch(e => console.log("Ses çalma hatası:", e));
+        const instruction = document.getElementById('instruction');
+
+        document.body.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play().catch(e => console.log("Ses çalma hatası:", e));
+                instruction.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
