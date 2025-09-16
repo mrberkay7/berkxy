@@ -1,133 +1,171 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <title>Berkay 🤍 İrem</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: black;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      color: white;
-      text-align: center;
-    }
-
-    h1 {
-      margin-top: 40px;
-      font-size: 32px;
-      color: #ff2f92;
-      text-shadow: 0 0 15px #ff2f92, 0 0 25px #ff2f92;
-    }
-
-    .counter {
-      margin-top: 30px;
-      font-size: 36px;
-      font-weight: bold;
-      line-height: 1.8;
-      text-shadow: 0 0 10px white, 0 0 20px white;
-    }
-
-    .message {
-      margin: 20px auto;
-      padding: 10px 15px;
-      max-width: 400px;
-      border-radius: 10px;
-      font-size: 16px;
-      background: rgba(255, 0, 100, 0.15);
-      color: #fff;
-      text-shadow: 0 0 8px #ff2f92;
-    }
-
-    .music {
-      position: fixed;
-      bottom: 15px;
-      width: 100%;
-      font-size: 14px;
-      color: #ff2f92;
-      text-shadow: 0 0 10px #ff2f92;
-      cursor: pointer;
-    }
-
-    /* Kalpler */
-    .heart {
-      position: fixed;
-      top: -20px;
-      color: #ff2f92;
-      font-size: 18px;
-      opacity: 0.8;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      0% {
-        transform: translateY(-20px);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Berkay 🤍 İrem</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        #hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 50, 150, 0.8);
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 0, 150, 0.5);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+        
+        h1 {
+            color: #ff4081;
+            margin-bottom: 30px;
+            font-size: 2em;
+            text-shadow: 0 0 10px rgba(255, 0, 150, 1);
+        }
+        
+        .counter {
+            font-size: 1.8em;
+            margin: 15px 0;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+        
+        .date {
+            font-style: italic;
+            margin-top: 30px;
+            color: #ff91c1;
+            font-size: 1.1em;
+            text-shadow: 0 0 8px #ff2f92;
+        }
+        
+        .instruction {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            color: #ff4081;
+            font-size: 14px;
+            opacity: 0.8;
+            animation: fadeInOut 3s infinite;
+        }
+        
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+    </style>
 </head>
 <body>
-  <h1>Berkay 🤍 İrem</h1>
+    <div id="hearts"></div>
+    
+    <div class="container">
+        <h1>Berkay 🤍 İrem</h1>
+        
+        <div class="counter" id="days">0 gün</div>
+        <div class="counter" id="hours">0 saat</div>
+        <div class="counter" id="minutes">0 dakika</div>
+        <div class="counter" id="seconds">0 saniye</div>
+        
+        <div class="date">"15 Mart 2025'ten beri Seni Çok Seviyorum Ömrümmm 💖"</div>
+    </div>
+           
+    <div class="instruction" id="instruction">🎵 Müzik Dinlemek İçin Ekrana Tıkla 🎵</div>
+    
+    <!-- Şarkı -->
+    <audio id="backgroundMusic" src="silinmez.mp3" preload="auto"></audio>
 
-  <div class="counter" id="counter"></div>
+    <script>
+        // Kalpler
+        function createHearts() {
+            const heartsContainer = document.getElementById('hearts');
+            const heart = document.createElement('div');
+            heart.innerHTML = '💖';
+            heart.classList.add('heart');
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = -20 + 'px';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            heart.style.opacity = Math.random() * 0.5 + 0.4;
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+            
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 7000);
+        }
+        setInterval(createHearts, 200);
 
-  <div class="message">
-    "15 Mart 2025'ten beri Seni Çok Seviyorum Ömrümmm 💖"
-  </div>
+        // Sayaç
+        function updateCounter() {
+            const startDate = new Date(2025, 2, 15, 0, 0, 0); // 15 Mart 2025
+            const now = new Date();
+            const diff = now - startDate;
+            
+            const secondsTotal = Math.floor(diff / 1000);
+            const minutesTotal = Math.floor(secondsTotal / 60);
+            const hoursTotal = Math.floor(minutesTotal / 60);
+            const daysTotal = Math.floor(hoursTotal / 24);
+            
+            const hours = hoursTotal % 24;
+            const minutes = minutesTotal % 60;
+            const seconds = secondsTotal % 60;
+            
+            document.getElementById("days").textContent = `${daysTotal} gün`;
+            document.getElementById("hours").textContent = `${hours} saat`;
+            document.getElementById("minutes").textContent = `${minutes} dakika`;
+            document.getElementById("seconds").textContent = `${seconds} saniye`;
+        }
+        setInterval(updateCounter, 1000);
+        updateCounter();
 
-  <div class="music" onclick="playMusic()">🎵 Müzik Dinlemek İçin Ekrana Tıkla 🎵</div>
-
-  <audio id="bg-music" src="silinmez.mp3"></audio>
-
-  <script>
-    // Sayaç hesaplama
-    function updateCounter() {
-      const startDate = new Date("2025-03-15T00:00:00");
-      const now = new Date();
-      const diff = now - startDate;
-
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-      const seconds = Math.floor((diff / 1000) % 60);
-
-      document.getElementById("counter").innerHTML =
-        days + " gün<br>" +
-        hours + " saat<br>" +
-        minutes + " dakika<br>" +
-        seconds + " saniye";
-    }
-
-    setInterval(updateCounter, 1000);
-    updateCounter();
-
-    // Müzik
-    function playMusic() {
-      document.getElementById("bg-music").play();
-    }
-
-    // Kalpler
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.classList.add("heart");
-      heart.innerHTML = "💖";
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      heart.style.fontSize = (12 + Math.random() * 20) + "px";
-      heart.style.animationDuration = (3 + Math.random() * 5) + "s";
-      document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 8000);
-    }
-
-    setInterval(createHeart, 200);
-  </script>
+        // Müzik
+        const audio = document.getElementById('backgroundMusic');
+        const instruction = document.getElementById('instruction');
+        document.body.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play().catch(e => console.log("Ses çalma hatası:", e));
+                instruction.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
