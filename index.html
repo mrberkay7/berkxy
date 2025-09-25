@@ -19,6 +19,7 @@
       cursor: pointer;
     }
 
+    /* Arka plan video */
     video#bgVideo {
       position: fixed;
       top: 0;
@@ -27,7 +28,7 @@
       height: 100%;
       object-fit: cover;
       z-index: -3;
-      filter: brightness(0.4);
+      filter: brightness(0.5); /* yazılar net gözükmesi için */
     }
 
     body::before {
@@ -37,7 +38,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.4);
+      background: rgba(0,0,0,0.15); /* kutu arkasındaki genel karartma */
       z-index: -2;
     }
 
@@ -66,7 +67,7 @@
 
     .container {
       text-align: center;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.35); /* Daha şeffaf */
       padding: 30px;
       border-radius: 15px;
       box-shadow: 0 0 20px rgba(255, 0, 150, 0.5);
@@ -98,17 +99,35 @@
       font-size: 1.1em;
       text-shadow: 0 0 8px #ff2f92;
     }
+
+    /* Video başlat uyarısı (opsiyonel) */
+    .instruction {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      color: #ff4081;
+      font-size: 14px;
+      opacity: 0.8;
+      animation: fadeInOut 3s infinite;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
   </style>
 </head>
 <body>
-  <!-- Arka plan video -->
+  <!-- Video arka plan -->
   <video id="bgVideo" loop playsinline>
     <source src="VID-20250925-WA0032.mp4" type="video/mp4">
     Tarayıcınız video etiketini desteklemiyor.
   </video>
 
   <div id="hearts"></div>
-  
+
   <div class="container">
     <h1>Berkay 🤍 İrem</h1>
     <div class="counter" id="days">0 gün</div>
@@ -117,6 +136,8 @@
     <div class="counter" id="seconds">0 saniye</div>
     <div class="date">"15 Mart 2025'ten beri Seni Çok Seviyorum Ömrümmm 💖"</div>
   </div>
+
+  <div class="instruction">🎬 Video'yu izlemek için ekrana bir kez tıkla</div>
 
   <script>
     // Kalpler
@@ -155,10 +176,12 @@
     setInterval(updateCounter, 1000);
     updateCounter();
 
-    // Video tıklayınca başlat (sesli çalışması için)
+    // Video tıklayınca başlat (sesli)
     const video = document.getElementById('bgVideo');
+    const instruction = document.querySelector('.instruction');
     document.body.addEventListener('click', () => {
       video.play().catch(e => console.log("Video oynatılmadı:", e));
+      instruction.style.display = 'none'; // yazı kaybolur
     });
   </script>
 </body>
