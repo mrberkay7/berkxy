@@ -16,9 +16,9 @@
       height: 100vh;
       color: #fff;
       position: relative;
+      cursor: pointer;
     }
 
-    /* Arka plan videosu */
     video#bgVideo {
       position: fixed;
       top: 0;
@@ -27,10 +27,9 @@
       height: 100%;
       object-fit: cover;
       z-index: -3;
-      filter: brightness(0.4); /* yazılar net gözüksün diye */
+      filter: brightness(0.4);
     }
 
-    /* Karanlık katman */
     body::before {
       content: "";
       position: absolute;
@@ -102,9 +101,9 @@
   </style>
 </head>
 <body>
-  <!-- Arka plan video (SES AÇIK) -->
-  <video id="bgVideo" autoplay loop playsinline>
-    <source src="15mart.mp4" type="video/mp4">
+  <!-- Arka plan video -->
+  <video id="bgVideo" loop playsinline>
+    <source src="VID-20250925-WA0032.mp4" type="video/mp4">
     Tarayıcınız video etiketini desteklemiyor.
   </video>
 
@@ -126,34 +125,28 @@
       const heart = document.createElement('div');
       heart.innerHTML = '💖';
       heart.classList.add('heart');
-
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.top = -20 + 'px';
       heart.style.animationDuration = Math.random() * 3 + 4 + 's';
       heart.style.opacity = Math.random() * 0.5 + 0.4;
       heart.style.fontSize = Math.random() * 20 + 15 + 'px';
-
       heartsContainer.appendChild(heart);
-
       setTimeout(() => heart.remove(), 7000);
     }
     setInterval(createHearts, 200);
 
     // Sayaç
     function updateCounter() {
-      const startDate = new Date(2025, 2, 15, 0, 0, 0); // 15 Mart 2025
+      const startDate = new Date(2025, 2, 15, 0, 0, 0);
       const now = new Date();
       const diff = now - startDate;
-
       const secondsTotal = Math.floor(diff / 1000);
       const minutesTotal = Math.floor(secondsTotal / 60);
       const hoursTotal = Math.floor(minutesTotal / 60);
       const daysTotal = Math.floor(hoursTotal / 24);
-
       const hours = hoursTotal % 24;
       const minutes = minutesTotal % 60;
       const seconds = secondsTotal % 60;
-
       document.getElementById("days").textContent = `${daysTotal} gün`;
       document.getElementById("hours").textContent = `${hours} saat`;
       document.getElementById("minutes").textContent = `${minutes} dakika`;
@@ -161,6 +154,12 @@
     }
     setInterval(updateCounter, 1000);
     updateCounter();
+
+    // Video tıklayınca başlat (sesli çalışması için)
+    const video = document.getElementById('bgVideo');
+    document.body.addEventListener('click', () => {
+      video.play().catch(e => console.log("Video oynatılmadı:", e));
+    });
   </script>
 </body>
 </html>
