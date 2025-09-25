@@ -28,16 +28,16 @@
       object-fit: cover;
       z-index: -3;
       filter: brightness(0.5);
+      display: none; /* başta gizli */
     }
 
-    body::before {
-      content: "";
-      position: absolute;
+    #overlay {
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.15);
+      background: black; /* başta ekran siyah */
       z-index: -2;
     }
 
@@ -59,9 +59,7 @@
     }
 
     @keyframes fall {
-      to {
-        transform: translateY(100vh);
-      }
+      to { transform: translateY(100vh); }
     }
 
     .container {
@@ -114,14 +112,18 @@
       0%, 100% { opacity: 0.6; }
       50% { opacity: 1; }
     }
+
   </style>
 </head>
 <body>
-  <!-- Video arka plan -->
+  <!-- Arka plan video -->
   <video id="bgVideo" loop playsinline>
     <source src="VID-20250925-WA0032.mp4" type="video/mp4">
     Tarayıcınız video etiketini desteklemiyor.
   </video>
+
+  <!-- Başta siyah overlay -->
+  <div id="overlay"></div>
 
   <div id="hearts"></div>
 
@@ -173,10 +175,13 @@
     setInterval(updateCounter, 1000);
     updateCounter();
 
-    // Video tıklayınca başlat (sesli)
+    // Ekrana tıklayınca video başlat
     const video = document.getElementById('bgVideo');
+    const overlay = document.getElementById('overlay');
     const instruction = document.querySelector('.instruction');
     document.body.addEventListener('click', () => {
+      overlay.style.display = 'none';   // siyah ekran kaybolur
+      video.style.display = 'block';     // video görünür
       video.play().catch(e => console.log("Video oynatılmadı:", e));
       instruction.style.display = 'none';
     });
