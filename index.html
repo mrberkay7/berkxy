@@ -37,7 +37,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: black; /* başta ekran siyah */
+      background: black;
       z-index: -2;
     }
 
@@ -113,55 +113,41 @@
       50% { opacity: 1; }
     }
 
-    /* 👻 ONLY YOU efekti */
+    /* 👻 ONLY YOU arka plan yazısı */
     .onlyyou-wrapper {
       position: fixed;
       inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      perspective: 800px;
-      z-index: 999;
       pointer-events: none;
+      z-index: 0; /* arka planda */
     }
 
     .onlyyou {
       font-size: clamp(48px, 12vw, 140px);
       font-weight: bold;
       letter-spacing: 0.15em;
-      color: rgba(255,255,255,0.85);
+      color: rgba(255,255,255,0.2);
       text-transform: uppercase;
       opacity: 0;
-      filter: blur(10px);
-      transform: translateZ(-400px) scale(0.6);
+      transform: scale(0.6);
       text-shadow:
-        0 0 30px rgba(255,255,255,0.08),
-        0 0 60px rgba(255,255,255,0.05);
+        0 0 30px rgba(255,255,255,0.05),
+        0 0 60px rgba(255,255,255,0.03);
+      transition: all 1s ease-in-out;
     }
 
-    .onlyyou.animate {
-      animation: comeCloser 2s cubic-bezier(.2,.95,.2,1) forwards;
+    .onlyyou.show {
+      opacity: 1;
+      transform: scale(1.6);
     }
 
-    @keyframes comeCloser {
-      0% {
-        opacity: 0;
-        filter: blur(10px);
-        transform: translateZ(-400px) scale(0.6);
-      }
-      60% {
-        opacity: 1;
-        filter: blur(4px);
-      }
-      100% {
-        opacity: 1;
-        filter: blur(0px);
-        transform: translateZ(80px) scale(1.6);
-        text-shadow:
-          0 0 50px rgba(255,255,255,0.2),
-          0 0 100px rgba(255,255,255,0.15);
-      }
+    .onlyyou.hide {
+      opacity: 0;
+      transform: scale(2);
     }
+
   </style>
 </head>
 <body>
@@ -187,7 +173,7 @@
 
   <div class="instruction">🎬 Video'yu izlemek için ekrana bir kez tıkla</div>
 
-  <!-- 👻 ONLY YOU Yazısı -->
+  <!-- 👻 ONLY YOU yazısı arka plan -->
   <div class="onlyyou-wrapper">
     <div id="onlyYouText" class="onlyyou">ONLY YOU</div>
   </div>
@@ -240,11 +226,15 @@
       instruction.style.display = 'none';
     });
 
-    // 👻 ONLY YOU animasyonunu 2 saniye sonra başlat
+    // 👻 ONLY YOU arka plan animasyonu: 2 saniye sonra göster, 3 saniye sonra kaybol
     window.addEventListener('load', () => {
+      const onlyYou = document.getElementById('onlyYouText');
       setTimeout(() => {
-        document.getElementById('onlyYouText').classList.add('animate');
-      }, 2000);
+        onlyYou.classList.add('show'); // göster
+        setTimeout(() => {
+          onlyYou.classList.add('hide'); // kaybol
+        }, 3000); // 3 saniye sonra kaybol
+      }, 2000); // sayfa açıldıktan 2 saniye sonra başla
     });
   </script>
 </body>
