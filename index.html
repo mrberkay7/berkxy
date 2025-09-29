@@ -113,6 +113,55 @@
       50% { opacity: 1; }
     }
 
+    /* 👻 ONLY YOU efekti */
+    .onlyyou-wrapper {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 800px;
+      z-index: 999;
+      pointer-events: none;
+    }
+
+    .onlyyou {
+      font-size: clamp(48px, 12vw, 140px);
+      font-weight: bold;
+      letter-spacing: 0.15em;
+      color: rgba(255,255,255,0.85);
+      text-transform: uppercase;
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateZ(-400px) scale(0.6);
+      text-shadow:
+        0 0 30px rgba(255,255,255,0.08),
+        0 0 60px rgba(255,255,255,0.05);
+    }
+
+    .onlyyou.animate {
+      animation: comeCloser 2s cubic-bezier(.2,.95,.2,1) forwards;
+    }
+
+    @keyframes comeCloser {
+      0% {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateZ(-400px) scale(0.6);
+      }
+      60% {
+        opacity: 1;
+        filter: blur(4px);
+      }
+      100% {
+        opacity: 1;
+        filter: blur(0px);
+        transform: translateZ(80px) scale(1.6);
+        text-shadow:
+          0 0 50px rgba(255,255,255,0.2),
+          0 0 100px rgba(255,255,255,0.15);
+      }
+    }
   </style>
 </head>
 <body>
@@ -137,6 +186,11 @@
   </div>
 
   <div class="instruction">🎬 Video'yu izlemek için ekrana bir kez tıkla</div>
+
+  <!-- 👻 ONLY YOU Yazısı -->
+  <div class="onlyyou-wrapper">
+    <div id="onlyYouText" class="onlyyou">ONLY YOU</div>
+  </div>
 
   <script>
     // Kalpler
@@ -180,10 +234,17 @@
     const overlay = document.getElementById('overlay');
     const instruction = document.querySelector('.instruction');
     document.body.addEventListener('click', () => {
-      overlay.style.display = 'none';   // siyah ekran kaybolur
-      video.style.display = 'block';     // video görünür
+      overlay.style.display = 'none';
+      video.style.display = 'block';
       video.play().catch(e => console.log("Video oynatılmadı:", e));
       instruction.style.display = 'none';
+    });
+
+    // 👻 ONLY YOU animasyonunu 2 saniye sonra başlat
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('onlyYouText').classList.add('animate');
+      }, 2000);
     });
   </script>
 </body>
